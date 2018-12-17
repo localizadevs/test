@@ -21,7 +21,7 @@ Iremos avaliar a legibilidade e limpeza do código, a facilidade de evolução d
 
 7) Não será permitida a utilização de algum produto de banco de dados. Quaisquer armazenamentos necessários deverão ser realizados em memória, sem persistência em disco.
 
-8) A única forma de recebimento da solução é através do repositório GitHub abaixo. Você deverá clonar a estrutura, desenvolver sua solução e enviá-la através de um pull request.
+8) A única forma de recebimento da solução é através do repositório GitHub abaixo. Você deverá clonar a estrutura, criar um branch com seu nome, desenvolver sua solução e enviá-la por commit->push. Será necessário antes de iniciar, informar ao avaliador sua conta no github, para que seja concedida a permissão de contribuição.
 Repositório: https://github.com/localizadevs/test.git
 
 9) Você terá **3 dias** contados a partir do momento em que receber a descrição do teste por um de nossos avaliadores, para postar usa solução. Caso necessite de mais tempo, gentileza solicitar. Caso tenha alguma dúvida sobre o teste, entre em contato com o remetente do desafio.
