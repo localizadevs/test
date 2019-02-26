@@ -7,6 +7,6 @@ namespace StockManagerSystem
     interface IAgencyRepository
     {
         VehicleModel TryAddModel(string modelName);
-        int GetVehicleIndex(string name);
+        VehicleModel GetVehicle(string name);
     }
 }

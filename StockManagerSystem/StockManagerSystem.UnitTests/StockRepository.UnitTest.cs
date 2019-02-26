@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 
-namespace StockManagerSystem.UnitTest
+namespace StockManagerSystem.UnitTests
 {
     [TestFixture]
     public class StockRepositoryTest
@@ -57,6 +57,33 @@ namespace StockManagerSystem.UnitTest
             Assert.AreEqual(1, stock.CountAgencies());
 
         }
+
+        [Test]
+        public void StockRepository_GetAgency_Exists()
+        {
+            StockRepository stock = new StockRepository();
+            Agency expectedAgency = new Agency("bh");
+            stock.TryInsertAgency("bh");
+
+            Agency bhAgency = stock.GetAgency("bh");
+
+            Assert.AreEqual(expectedAgency.Name, bhAgency.Name);
+
+        }
+
+
+        [Test]
+        public void StockRepository_GetAgency_NotExists()
+        {
+            StockRepository stock = new StockRepository();                   
+
+            Exception error = Assert.Throws<Exception>(() => stock.GetAgency("bh"));
+
+            Assert.That(error.Message, Is.EqualTo("Agency Not Found"));
+
+           
+        }
+
 
 
     }

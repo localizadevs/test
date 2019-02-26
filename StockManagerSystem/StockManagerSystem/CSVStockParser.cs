@@ -2,63 +2,89 @@
 
 namespace StockManagerSystem
 {
-    
+    public enum ExpectedAttributes
+    {
+        agencia = 0,
+        carro,
+        capacidade,
+        quantidade,
+        tarifapadrao
+    }
+
     public class CSVStockParser : AbstractCSVParser
     {
         private IStockRepository stockRepository;
         private readonly int attributesQuantity;
-        protected enum ExpectedAttributes
+
+
+        public CSVStockParser(IStockRepository respository)
         {
-            agencia,
-            carro,
-            capacidade,
-            quantidade,
-            tarifapadrao
+            stockRepository = respository;
+            attributesQuantity = Enum.GetValues(typeof(ExpectedAttributes)).Length;
+            LoadInitialAttributesPositions();
         }
 
-        public CSVStockParser(IStockRepository respository) 
+        protected override void LoadInitialAttributesPositions()
         {
-            this.stockRepository = respository;
-            this.attributesQuantity = Enum.GetValues(typeof(ExpectedAttributes)).Length;
+            int position;
+            foreach (ExpectedAttributes attribute in Enum.GetValues(typeof(ExpectedAttributes)))
+            {
+                position = (int)attribute;
+                AttributesPosition.Add((int)attribute, position);
+            }
         }
 
         /// <summary>
         /// Load Attribute as Keys and their position as values.
         /// </summary>
         /// <param name="headerLine">First line of the CSV file.</param>
-        public override void LoadHeaderWithPositions(string headerLine)
+        public override void LoadAttributesPositions(string headerLine)
         {
             int position = 0;
-            foreach( string attribute in headerLine.Split(";"))
+            int totalAttributesParsed = 0;
+            foreach (string attribute in headerLine.Split(";"))
             {
-                if (IsValidAttribute(attribute))
+                if (TryConvertToExpectedAttributesEnum(attribute, out ExpectedAttributes attributeEnum))
                 {
-                    this.Header.Add(attribute.ToLower(), position);
+                    AttributesPosition[(int)attributeEnum] = position;
+                    totalAttributesParsed++;
                 }
-                    position++;
+                position++;
 
+            }
+            if (MissingAttributes(totalAttributesParsed))
+            {
+                throw new Exception("CSV Parser found a problem: Missing attributes. Please Check the input file.");
             }
         }
 
-        private bool IsValidAttribute(string attribute)
+        private bool TryConvertToExpectedAttributesEnum(string attribute, out ExpectedAttributes attributeEnum)
         {
-            return !string.IsNullOrEmpty(attribute) && Enum.IsDefined(typeof(ExpectedAttributes), attribute);
+            return Enum.TryParse(attribute, true, out attributeEnum);
         }
 
-        public override void LoadContentData(string contentLine)
+        private bool MissingAttributes(int totalAttributesParsed)
+        {
+            return totalAttributesParsed != this.AttributesPosition.Count;
+        }
+
+        public override void LoadContentDataByPosition(string contentLine)
         {
             string[] values = contentLine.Split(";");
             if (values.Length >= attributesQuantity)
             {
-                Agency agency = stockRepository.TryInsertAgency(values[this.Header[ExpectedAttributes.agencia.ToString()]]);
-                VehicleModel vehicleModel = agency.TryAddModel(values[this.Header[ExpectedAttributes.carro.ToString()]]);
-                vehicleModel.Capacity = int.Parse(values[this.Header[ExpectedAttributes.capacidade.ToString()]]);
-                vehicleModel.Available = int.Parse(values[this.Header[ExpectedAttributes.quantidade.ToString()]]);
-                vehicleModel.DefaultPrice = Double.Parse(values[this.Header[ExpectedAttributes.tarifapadrao.ToString()]]);
+                Agency agency = stockRepository.TryInsertAgency(values[GetExpectedAttributePosition(ExpectedAttributes.agencia)]);
+                VehicleModel vehicleModel = agency.TryAddModel(values[GetExpectedAttributePosition(ExpectedAttributes.carro)]);
+                vehicleModel.Capacity = int.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.capacidade)]);
+                vehicleModel.Available = int.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.quantidade)]);
+                vehicleModel.DefaultPrice = Double.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.tarifapadrao)]);
             }
         }
 
-         
+        public int GetExpectedAttributePosition(ExpectedAttributes attribute)
+        {
+            return AttributesPosition[(int)attribute];
+        }
 
     }
 }

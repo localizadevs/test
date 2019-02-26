@@ -7,21 +7,23 @@ namespace StockManagerSystem
 {
     public abstract class AbstractCSVParser
     {
-        public Dictionary<string, int> Header { get; set; } = new Dictionary<string, int>();
+        public Dictionary<int, int> AttributesPosition { get; set; } = new Dictionary<int, int>();
 
-        public abstract void LoadHeaderWithPositions (string headerLine);
+        protected abstract void LoadInitialAttributesPositions();
 
-        public abstract void LoadContentData(string contentLine);
+        public abstract void LoadAttributesPositions (string headerLine);
+
+        public abstract void LoadContentDataByPosition(string contentLine);
 
         public virtual void ReadFile(string fileName)
         {
             using (StreamReader sr = File.OpenText(fileName))
             {
                 string actualLine = sr.ReadLine();
-                this.LoadHeaderWithPositions(actualLine);
+                this.LoadAttributesPositions(actualLine);
                 while ((actualLine = sr.ReadLine()) != null)
                 {
-                    this.LoadContentData(actualLine);                    
+                    this.LoadContentDataByPosition(actualLine);                    
                 }
             }
         }

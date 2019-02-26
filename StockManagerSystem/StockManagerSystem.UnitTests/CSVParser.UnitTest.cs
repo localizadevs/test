@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 
-namespace StockManagerSystem.UnitTest
+namespace StockManagerSystem.UnitTests
 {
     [TestFixture]
     public class CSVParserTest
@@ -18,19 +18,17 @@ namespace StockManagerSystem.UnitTest
                             $"SP;VOLVO XC60;10;9;110{Environment.NewLine}" +
                             $"SP;AUDI A3;20;5;80{Environment.NewLine}").Split(Environment.NewLine);
         }
-        
+
         [Test]
         public void CSVParser_ReadHeader_CheckReader()
         {
             CSVStockParser csvParser = new CSVStockParser(null);
             string[] expectedHeader = DEFAULT_HEADER.Split(";");
+            csvParser.LoadAttributesPositions(DEFAULT_HEADER);
 
-            csvParser.LoadHeaderWithPositions(DEFAULT_HEADER);
-            
-            Assert.Contains("agencia", csvParser.Header.Keys) ;
-            Assert.Contains("carro", csvParser.Header.Keys);
-            Assert.Contains("capacidade", csvParser.Header.Keys);
-            Assert.Contains("tarifapadrao", csvParser.Header.Keys);
+            int capacidadePosition = csvParser.GetExpectedAttributePosition(ExpectedAttributes.capacidade);
+
+            Assert.AreEqual(2, capacidadePosition);
 
         }
 
@@ -38,15 +36,23 @@ namespace StockManagerSystem.UnitTest
         public void CSVParser_ReadHeader_OmitInvalidHeaders()
         {
             CSVStockParser csvParser = new CSVStockParser(null);
-            string[] expectedHeader = "agencia;fake;capacidade;quantidade;tarifapadrao".Split(";"); 
+            string fakeHeader = "agencia;dummy;carro;capacidade;quantidade;tarifapadrao";
+            csvParser.LoadAttributesPositions(fakeHeader);
 
-            csvParser.LoadHeaderWithPositions(DEFAULT_HEADER);
+            int capacidadePosition = csvParser.GetExpectedAttributePosition(ExpectedAttributes.capacidade);
 
-            Assert.Contains("agencia", csvParser.Header.Keys);
-            Assert.Contains("capacidade", csvParser.Header.Keys);
-            Assert.Contains("tarifapadrao", csvParser.Header.Keys);
-            Assert.AreEqual(2, csvParser.Header["capacidade"]);
+            Assert.AreEqual(3, capacidadePosition);
+        }
 
+        [Test]
+        public void CSVParser_ReadHeader_MissingHeaders()
+        {
+            CSVStockParser csvParser = new CSVStockParser(null);
+            string fakeHeader = "agencia;capacidade;quantidade;tarifapadrao";
+
+            Exception ex = Assert.Throws<Exception>(() => csvParser.LoadAttributesPositions(fakeHeader));
+
+            Assert.That(ex.Message, Is.EqualTo("CSV Parser found a problem: Missing attributes. Please Check the input file."));
 
         }
 
@@ -56,9 +62,9 @@ namespace StockManagerSystem.UnitTest
             CSVStockParser csvParser = new CSVStockParser(null);
             string[] expectedHeader = (DEFAULT_HEADER + ";").Split(";");
 
-            csvParser.LoadHeaderWithPositions(DEFAULT_HEADER);
+            csvParser.LoadAttributesPositions(DEFAULT_HEADER);
 
-            Assert.AreEqual(5, csvParser.Header.Count);
+            Assert.AreEqual(5, csvParser.AttributesPosition.Count);
 
         }
 
@@ -66,12 +72,24 @@ namespace StockManagerSystem.UnitTest
         public void CSVParser_ReadContent_CheckAgencies()
         {
             IStockRepository stockRepository = new StockRepository();
-
             CSVStockParser csvParser = new CSVStockParser(stockRepository);
-            csvParser.LoadHeaderWithPositions(DEFAULT_HEADER);
+            csvParser.LoadAttributesPositions(DEFAULT_HEADER);
 
             foreach (string line in fileContentData)
-                csvParser.LoadContentData(line);
+                csvParser.LoadContentDataByPosition(line);
+
+            Assert.AreEqual(2, stockRepository.CountAgencies());
+
+        }
+
+        [Test]
+        public void CSVParser_ReadContent_WithoutHeader()
+        {
+            IStockRepository stockRepository = new StockRepository();
+            CSVStockParser csvParser = new CSVStockParser(stockRepository);
+
+            foreach (string line in fileContentData)
+                csvParser.LoadContentDataByPosition(line);
 
             Assert.AreEqual(2, stockRepository.CountAgencies());
 

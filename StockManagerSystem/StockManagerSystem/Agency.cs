@@ -6,7 +6,7 @@ namespace StockManagerSystem
     public class Agency : IAgencyRepository
     {
         public string Name { get; set; }
-        private List<VehicleModel> Fleet { get; set; } = new List<VehicleModel>();
+        public List<VehicleModel> Fleet { get; private set; } = new List<VehicleModel>();
 
         public Agency(string name)
         {
@@ -23,6 +23,7 @@ namespace StockManagerSystem
 
             VehicleModel modelToAdd = new VehicleModel(modelName);
             this.Fleet.Add(modelToAdd);
+
             return modelToAdd;
         }
 
@@ -34,6 +35,16 @@ namespace StockManagerSystem
                     return i;
             }
             return -1;
+        }
+
+        public VehicleModel GetVehicle(string name)
+        {
+            int vehicleIndex = GetVehicleIndex(name);
+            if (vehicleIndex == -1)
+            {
+                throw new Exception("Vehicle Model Not Found");
+            }
+            return Fleet[vehicleIndex];
         }
     }
 }

@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System;
 
-namespace StockManagerSystem.UnitTest
+namespace StockManagerSystem.UnitTests
 {
     [TestFixture]
     public class VehicleModelTest
@@ -128,6 +128,7 @@ namespace StockManagerSystem.UnitTest
             Assert.IsFalse(hasReturned);
 
         }
+
 
     }
 }

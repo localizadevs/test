@@ -9,7 +9,7 @@ namespace StockManagerSystem
 
         int CountAgencies();
 
-        int GetAgencyIndex(string name);
+        Agency GetAgency(string name);
 
         Agency TryInsertAgency(string name);
 

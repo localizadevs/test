@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace StockManagerSystem
 {
     public class StockRepository : IStockRepository
     {
-        private List<Agency> Agencies { get; set; } = new List<Agency>();
+        public List<Agency> Agencies { get; private set; } = new List<Agency>();
 
         public int CountAgencies()
         {
@@ -23,18 +22,29 @@ namespace StockManagerSystem
             }
 
             Agency agencyToInsert = new Agency(name);
-            this.Agencies.Add(agencyToInsert);
+            Agencies.Add(agencyToInsert);
             return agencyToInsert;
         }
 
         public int GetAgencyIndex(string name)
-        {            
-            for (int i=0; i <Agencies.Count; i++)
+        {
+            for (int i = 0; i < Agencies.Count; i++)
             {
-                if (Agencies[i].Name.Equals(name,StringComparison.OrdinalIgnoreCase))
+                if (Agencies[i].Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return i;
             }
             return -1;
+        }
+
+        public Agency GetAgency(string name)
+        {
+            int index = GetAgencyIndex(name);
+            if (index == -1)
+            {
+                throw new Exception("Agency Not Found");
+            }
+
+            return Agencies[index];
         }
     }
 }
