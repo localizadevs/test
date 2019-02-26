@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StockManagerSystem
 {
-    public class Agency
+    public class Agency : IAgencyRepository
     {
         public string Name { get; set; }
         private List<VehicleModel> Fleet { get; set; } = new List<VehicleModel>();
