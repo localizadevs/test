@@ -7,9 +7,9 @@ namespace StockManagerSystem
     interface IRentableVehicle
     {        
         bool MayRentVehicle();
-        Double DiscountRate();
-        Tuple<Double, Double> CostsToRentVehicle();
-        void RentVehicle();
-        void ReturnVehicle();
+        Double GetDiscountRate();
+        (double costs, double discount) GetCostsAndDiscountToRent();
+        bool RentVehicle();
+        bool ReturnVehicle();
     }
 }

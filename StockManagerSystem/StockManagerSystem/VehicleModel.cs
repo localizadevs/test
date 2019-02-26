@@ -25,7 +25,7 @@ namespace StockManagerSystem
             return this.Available > 0;
         }
 
-        public double DiscountRate()
+        public double GetDiscountRate()
         {
 
             if (this.Available == 1)
@@ -34,19 +34,40 @@ namespace StockManagerSystem
             return 10 * this.Available / this.Capacity;
         }
 
-        public Tuple<double, double> CostsToRentVehicle()
+        public (double costs, double discount) GetCostsAndDiscountToRent()
         {
-            throw new NotImplementedException();
+            return (this.GetFinalPrice(), this.GetDiscountRate());
         }
 
-        public void RentVehicle()
+        public double GetFinalPrice()
         {
-            throw new NotImplementedException();
+            return this.DefaultPrice * (1 - (this.GetDiscountRate() / 100));
         }
 
-        public void ReturnVehicle()
+        public bool RentVehicle()
         {
-            throw new NotImplementedException();
+            if (this.MayRentVehicle())
+            {
+                this.Available--;
+                return true;
+            }
+            return false;
         }
+
+        public bool ReturnVehicle()
+        {
+            if (this.MayReturn())
+            {
+                this.Available++;
+                return true;
+            }
+            return false;
+        }
+
+        private bool MayReturn()
+        {
+            return this.Available + 1 <= this.Capacity;
+        }
+
     }
 }
