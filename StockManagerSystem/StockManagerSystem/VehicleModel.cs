@@ -6,7 +6,7 @@ namespace StockManagerSystem
     {
         public string Name { get; set; }
         public int Capacity { get;  set; }
-        public int Quantity { get;  set; }
+        public int Available { get;  set; }
         public Double DefaultPrice { get;  set; }
 
         public VehicleModel()
@@ -22,12 +22,16 @@ namespace StockManagerSystem
 
         public bool MayRentVehicle()
         {
-            throw new NotImplementedException();
+            return this.Available > 0;
         }
 
         public double DiscountRate()
         {
-            throw new NotImplementedException();
+
+            if (this.Available == 1)
+                return 0.0;
+
+            return 10 * this.Available / this.Capacity;
         }
 
         public Tuple<double, double> CostsToRentVehicle()

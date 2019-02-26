@@ -53,7 +53,7 @@ namespace StockManagerSystem
                 Agency agency = stockRepository.TryInsertAgency(values[this.Header[ExpectedAttributes.agencia.ToString()]]);
                 VehicleModel vehicleModel = agency.TryAddModel(values[this.Header[ExpectedAttributes.carro.ToString()]]);
                 vehicleModel.Capacity = int.Parse(values[this.Header[ExpectedAttributes.capacidade.ToString()]]);
-                vehicleModel.Quantity = int.Parse(values[this.Header[ExpectedAttributes.quantidade.ToString()]]);
+                vehicleModel.Available = int.Parse(values[this.Header[ExpectedAttributes.quantidade.ToString()]]);
                 vehicleModel.DefaultPrice = Double.Parse(values[this.Header[ExpectedAttributes.tarifapadrao.ToString()]]);
             }
         }
