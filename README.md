@@ -1,4 +1,4 @@
-# Desafio de código
+﻿# Desafio de código
 Olá!
 
 Nesta etapa iremos avaliar a solução para um desafio prático, onde serão analisados aspectos desde o desenho da solução até o desempenho do código gerado. 
@@ -29,3 +29,14 @@ Repositório: https://github.com/localizadevs/test.git
 10) Para termos um processo mais justo para todos os candidatos, por favor não compartilhe o desafio com outras pessoas.
 
 Boa sorte e boa diversão!
+
+
+# Solução
+A solução foi desenvolvida em .Net Core utilizando a biblioteca NUNit para testes unitarios. A aplicação é do tipo Console e exibe as principais informações por tabelas.
+
+### HOW TO RUN
+`dotnet restore`
+`dotnet build`
+`dotnet run "%FULL_PATH_CSV_ESTOQUE%"`
+
+Para executar a aplicação, deve-se  executar o dotnet restore e dotnet build, antes. Ao executar deve-se indicar o full path do arquivo de estoque em CSV para ser parseado.
