@@ -46,4 +46,4 @@ Para executar a aplicação, deve-se  executar o dotnet restore e dotnet build, 
 `dotnet run "%FULL_PATH_CSV_ESTOQUE%"`
 
 
-![alt text](https://imgur.com/2og7WWg)
+![Screenshot](sample.PNG)
