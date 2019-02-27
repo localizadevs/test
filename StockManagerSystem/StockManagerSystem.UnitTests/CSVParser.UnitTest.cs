@@ -64,19 +64,19 @@ namespace StockManagerSystem.UnitTests
 
             csvParser.LoadAttributesPositions(DEFAULT_HEADER);
 
-            Assert.AreEqual(5, csvParser.AttributesPosition.Count);
+            Assert.AreEqual(5, csvParser.ExpectedAttributesPosition.Count);
 
         }
 
         [Test]
         public void CSVParser_ReadContent_CheckAgencies()
         {
-            IStockRepository stockRepository = new StockRepository();
+            StockComposite stockRepository = new StockComposite();
             CSVStockParser csvParser = new CSVStockParser(stockRepository);
             csvParser.LoadAttributesPositions(DEFAULT_HEADER);
 
             foreach (string line in fileContentData)
-                csvParser.LoadContentDataByPosition(line);
+                csvParser.LoadAttributeDataByPosition(line);
 
             Assert.AreEqual(2, stockRepository.CountAgencies());
 
@@ -85,11 +85,11 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void CSVParser_ReadContent_WithoutHeader()
         {
-            IStockRepository stockRepository = new StockRepository();
+            StockComposite stockRepository = new StockComposite();
             CSVStockParser csvParser = new CSVStockParser(stockRepository);
 
             foreach (string line in fileContentData)
-                csvParser.LoadContentDataByPosition(line);
+                csvParser.LoadAttributeDataByPosition(line);
 
             Assert.AreEqual(2, stockRepository.CountAgencies());
 

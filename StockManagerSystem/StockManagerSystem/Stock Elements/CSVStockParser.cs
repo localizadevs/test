@@ -1,4 +1,5 @@
 ﻿using System;
+using CommonParsers;
 
 namespace StockManagerSystem
 {
@@ -13,13 +14,13 @@ namespace StockManagerSystem
 
     public class CSVStockParser : AbstractCSVParser
     {
-        private IStockRepository stockRepository;
+        private StockComposite stock;
         private readonly int attributesQuantity;
 
 
-        public CSVStockParser(IStockRepository respository)
+        public CSVStockParser(StockComposite stockComposite)
         {
-            stockRepository = respository;
+            this.stock = stockComposite;
             attributesQuantity = Enum.GetValues(typeof(ExpectedAttributes)).Length;
             LoadInitialAttributesPositions();
         }
@@ -30,7 +31,7 @@ namespace StockManagerSystem
             foreach (ExpectedAttributes attribute in Enum.GetValues(typeof(ExpectedAttributes)))
             {
                 position = (int)attribute;
-                AttributesPosition.Add((int)attribute, position);
+                ExpectedAttributesPosition.Add((int)attribute, position);
             }
         }
 
@@ -46,7 +47,7 @@ namespace StockManagerSystem
             {
                 if (TryConvertToExpectedAttributesEnum(attribute, out ExpectedAttributes attributeEnum))
                 {
-                    AttributesPosition[(int)attributeEnum] = position;
+                    ExpectedAttributesPosition[(int)attributeEnum] = position;
                     totalAttributesParsed++;
                 }
                 position++;
@@ -65,16 +66,16 @@ namespace StockManagerSystem
 
         private bool MissingAttributes(int totalAttributesParsed)
         {
-            return totalAttributesParsed != this.AttributesPosition.Count;
+            return totalAttributesParsed != this.ExpectedAttributesPosition.Count;
         }
 
-        public override void LoadContentDataByPosition(string contentLine)
+        public override void LoadAttributeDataByPosition(string contentLine)
         {
             string[] values = contentLine.Split(";");
             if (values.Length >= attributesQuantity)
             {
-                Agency agency = stockRepository.TryInsertAgency(values[GetExpectedAttributePosition(ExpectedAttributes.agencia)]);
-                VehicleModel vehicleModel = agency.TryAddModel(values[GetExpectedAttributePosition(ExpectedAttributes.carro)]);
+                Agency agency = stock.TryInsertAgency(values[GetExpectedAttributePosition(ExpectedAttributes.agencia)]);
+                VehicleModel vehicleModel = agency.TryAddVehicle(values[GetExpectedAttributePosition(ExpectedAttributes.carro)]);
                 vehicleModel.Capacity = int.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.capacidade)]);
                 vehicleModel.Available = int.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.quantidade)]);
                 vehicleModel.DefaultPrice = Double.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.tarifapadrao)]);
@@ -83,8 +84,12 @@ namespace StockManagerSystem
 
         public int GetExpectedAttributePosition(ExpectedAttributes attribute)
         {
-            return AttributesPosition[(int)attribute];
+            return ExpectedAttributesPosition[(int)attribute];
         }
 
+        public StockComposite GetStock()
+        {
+            return this.stock;
+        }
     }
 }

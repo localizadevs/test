@@ -2,7 +2,7 @@
 
 namespace StockManagerSystem
 {
-    public class VehicleModel : IRentableVehicle
+    public class VehicleModel : IRentableVehicleComponent
     {
         public string Name { get; set; }
         public int Capacity { get;  set; }
@@ -17,12 +17,6 @@ namespace StockManagerSystem
         public VehicleModel(string name)
         {
             this.Name = name;
-        }
-        
-
-        public bool MayRentVehicle()
-        {
-            return this.Available > 0;
         }
 
         public double GetDiscountRate()
@@ -44,9 +38,9 @@ namespace StockManagerSystem
             return this.DefaultPrice * (1 - (this.GetDiscountRate() / 100));
         }
 
-        public bool RentVehicle()
+        public bool TryPerformRent()
         {
-            if (this.MayRentVehicle())
+            if (this.CanBeRented())
             {
                 this.Available--;
                 return true;
@@ -54,9 +48,14 @@ namespace StockManagerSystem
             return false;
         }
 
-        public bool ReturnVehicle()
+        public bool CanBeRented()
         {
-            if (this.MayReturn())
+            return this.Available > 0;
+        }
+
+        public bool TryReturn()
+        {
+            if (this.CanBeReturned())
             {
                 this.Available++;
                 return true;
@@ -64,7 +63,7 @@ namespace StockManagerSystem
             return false;
         }
 
-        private bool MayReturn()
+        public bool CanBeReturned()
         {
             return this.Available + 1 <= this.Capacity;
         }

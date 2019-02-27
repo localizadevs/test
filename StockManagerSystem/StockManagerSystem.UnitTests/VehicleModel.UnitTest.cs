@@ -11,7 +11,7 @@ namespace StockManagerSystem.UnitTests
         {
             VehicleModel vehicleModel = new VehicleModel { Name = "fusca", Capacity = 100, Available = 10, DefaultPrice = 10.1 };
 
-            bool isRentable = vehicleModel.MayRentVehicle();
+            bool isRentable = vehicleModel.CanBeRented();
 
             Assert.IsTrue(isRentable);
 
@@ -22,7 +22,7 @@ namespace StockManagerSystem.UnitTests
         {
             VehicleModel vehicleModel = new VehicleModel { Name = "fusca", Capacity = 10, Available = 0, DefaultPrice = 10.1 };
 
-            bool isRentable = vehicleModel.MayRentVehicle();
+            bool isRentable = vehicleModel.CanBeRented();
 
             Assert.IsFalse(isRentable);
 
@@ -66,7 +66,7 @@ namespace StockManagerSystem.UnitTests
         {
             VehicleModel vehicleModel = new VehicleModel { Name = "fusca", Capacity = 40, Available = 1, DefaultPrice = 10.1 };
 
-            vehicleModel.RentVehicle();
+            vehicleModel.TryPerformRent();
 
             Assert.AreEqual(0, vehicleModel.Available);
 
@@ -76,7 +76,7 @@ namespace StockManagerSystem.UnitTests
         {
             VehicleModel vehicleModel = new VehicleModel { Name = "fusca", Capacity = 40, Available = 0, DefaultPrice = 10.1 };
 
-            bool processRented = vehicleModel.RentVehicle();
+            bool processRented = vehicleModel.TryPerformRent();
 
             Assert.IsFalse(processRented);
 
@@ -112,7 +112,7 @@ namespace StockManagerSystem.UnitTests
         {
             VehicleModel vehicleModel = new VehicleModel { Name = "fusca", Capacity = 40, Available = 1, DefaultPrice = 10.1 };
 
-            bool hasReturned = vehicleModel.ReturnVehicle();
+            bool hasReturned = vehicleModel.TryReturn();
 
             Assert.IsTrue(hasReturned);
 
@@ -123,7 +123,7 @@ namespace StockManagerSystem.UnitTests
         {
             VehicleModel vehicleModel = new VehicleModel { Name = "fusca", Capacity = 40, Available = 40, DefaultPrice = 10.1 };
 
-            bool hasReturned = vehicleModel.ReturnVehicle();
+            bool hasReturned = vehicleModel.TryReturn();
 
             Assert.IsFalse(hasReturned);
 

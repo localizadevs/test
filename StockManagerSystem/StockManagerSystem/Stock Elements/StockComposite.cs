@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StockManagerSystem
 {
-    public class StockRepository : IStockRepository
+    public class StockComposite : IStockComposite
     {
         public List<Agency> Agencies { get; private set; } = new List<Agency>();
 
@@ -26,6 +26,7 @@ namespace StockManagerSystem
             return agencyToInsert;
         }
 
+
         public int GetAgencyIndex(string name)
         {
             for (int i = 0; i < Agencies.Count; i++)
@@ -34,6 +35,11 @@ namespace StockManagerSystem
                     return i;
             }
             return -1;
+        }
+
+        public bool ContainsAgency(string name)
+        {
+            return GetAgencyIndex(name) >= 0;
         }
 
         public Agency GetAgency(string name)
@@ -46,5 +52,7 @@ namespace StockManagerSystem
 
             return Agencies[index];
         }
+
+
     }
 }

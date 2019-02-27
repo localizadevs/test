@@ -1,29 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace StockManagerSystem
+namespace CommonParsers
 {
+    /// <summary>
+    /// Aims a design logic to CSV PARSERS.
+    /// </summary>
     public abstract class AbstractCSVParser
     {
-        public Dictionary<int, int> AttributesPosition { get; set; } = new Dictionary<int, int>();
-
+        public Dictionary<int, int> ExpectedAttributesPosition { get; set; } = new Dictionary<int, int>();
+        /// <summary>
+        /// Guarantee a default position to each attribute in ExpectedAttributesPosition.
+        /// </summary>
         protected abstract void LoadInitialAttributesPositions();
-
-        public abstract void LoadAttributesPositions (string headerLine);
-
-        public abstract void LoadContentDataByPosition(string contentLine);
-
+        /// <summary>
+        /// Gather the position information from the header line.
+        /// </summary>
+        public abstract void LoadAttributesPositions(string headerLine);
+        /// <summary>
+        /// Load each attribute data by each position from the content line.
+        /// </summary>
+        public abstract void LoadAttributeDataByPosition(string contentLine);
+        /// <summary>
+        /// Parse a csv file and extracts its data.
+        /// </summary>
+        /// <param name="fileName"></param>
         public virtual void ReadFile(string fileName)
         {
             using (StreamReader sr = File.OpenText(fileName))
             {
                 string actualLine = sr.ReadLine();
-                this.LoadAttributesPositions(actualLine);
+                LoadAttributesPositions(actualLine);
                 while ((actualLine = sr.ReadLine()) != null)
                 {
-                    this.LoadContentDataByPosition(actualLine);                    
+                    LoadAttributeDataByPosition(actualLine);
                 }
             }
         }

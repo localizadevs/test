@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ConsoleTableExt" Version="2.0.2" />
+  </ItemGroup>
+
 </Project>
