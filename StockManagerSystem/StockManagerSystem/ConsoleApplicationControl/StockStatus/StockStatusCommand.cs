@@ -2,6 +2,7 @@
 {
     class StockStatusCommand : AbstactSelectionCommand
     {
+        private const string ReturnToInitialScreenOption = "y";
         private StockController stockController;
         public StockStatusCommand(StockController stock)
         {
@@ -16,16 +17,14 @@
         {
             bool repeatSelection = false;
 
-            switch (keyPressed)
-            {
-                case "Y":
-                case "y":
-                    break;
-                default:
-                    repeatSelection = InvalidSelection(lastMessage);
-                    break;
+            if (InvalidOption(keyPressed) ){ 
+                    repeatSelection = InvalidSelection(lastMessage);                 
             }
             return repeatSelection;
+        }
+        public bool InvalidOption(string keyPressed)
+        {
+            return !(ReturnToInitialScreenOption.Equals(keyPressed));
         }
     }
 }

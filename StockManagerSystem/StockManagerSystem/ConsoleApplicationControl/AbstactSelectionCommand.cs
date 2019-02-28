@@ -7,6 +7,9 @@ namespace StockManagerSystem
     /// </summary>
     public abstract class AbstactSelectionCommand
     {
+        protected const string CancelOption = "c";
+        
+
         public void Command()
         {
             string lastMessage = DisplayCommand();
@@ -32,7 +35,7 @@ namespace StockManagerSystem
 
         public virtual bool IsNotACancelOption(string userInput)
         {
-            return !(userInput.Equals("c", System.StringComparison.OrdinalIgnoreCase));
+            return !(userInput.Equals(CancelOption, System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }

@@ -3,6 +3,13 @@
     public class InitialSelection : AbstactSelectionCommand
 
     {
+
+        private const string
+            CurrentStatusStockReport = "1",
+            RentVehicle = "2",
+            ReturnVehicle = "3",
+            Exit = "4";
+
         private StockStatusCommand currentStockStatusCommand;
         private RentingInitialCommand rentingInitialCommand;
         private ReturningInitialCommand returningInitialCommand;
@@ -24,19 +31,19 @@
             bool repeatSelection = true;
             switch (keyPressed)
             {
-                case "1":
+                case CurrentStatusStockReport:
                     currentStockStatusCommand.Command();
                     ViewDisplayBuilder.DisplayInitialMenu();
                     break;
-                case "2":
+                case RentVehicle:
                     rentingInitialCommand.Command();
                     ViewDisplayBuilder.DisplayInitialMenu();
                     break;
-                case "3":
+                case ReturnVehicle:
                     returningInitialCommand.Command();
                     ViewDisplayBuilder.DisplayInitialMenu();
                     break;
-                case "4":
+                case Exit:
                     repeatSelection = false;
                     break;
                 default:

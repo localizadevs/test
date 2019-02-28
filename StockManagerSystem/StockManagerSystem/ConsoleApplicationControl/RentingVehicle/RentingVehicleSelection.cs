@@ -29,7 +29,7 @@
                 RentingPriceConfirmation priceCommand = new RentingPriceConfirmation(this, stockController, agencyToRent, userInput);
                 priceCommand.Command();                
             }
-            else if (userInput.Equals("c", System.StringComparison.OrdinalIgnoreCase))
+            else if (userInput.Equals(CancelOption, System.StringComparison.OrdinalIgnoreCase))
             {
                 rentingInitial.Command();
             }
