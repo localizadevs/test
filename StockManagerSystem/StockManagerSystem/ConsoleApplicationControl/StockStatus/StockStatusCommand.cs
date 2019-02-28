@@ -24,7 +24,7 @@
         }
         public bool InvalidOption(string keyPressed)
         {
-            return !(ReturnToInitialScreenOption.Equals(keyPressed));
+            return !(ReturnToInitialScreenOption.Equals(keyPressed, System.StringComparison.OrdinalIgnoreCase));
         }
     }
 }
