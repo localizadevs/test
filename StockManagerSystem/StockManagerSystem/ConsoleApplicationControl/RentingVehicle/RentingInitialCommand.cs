@@ -4,12 +4,11 @@ namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 {
     public class RentingInitialCommand : AbstactSelectionCommand
     {
-        private readonly StockController stockController;        
+        private readonly StockController stockController;
 
         public RentingInitialCommand( StockController stock)
         {
             stockController = stock;
-            
         }
 
         public override string DisplayCommand()
@@ -28,7 +27,9 @@ namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
             if (inputIsValidAgency)
             {
                 RentingVehicleSelection rentingVehicleSelection = new RentingVehicleSelection(this, stockController, userInput);
-                rentingVehicleSelection.Command();                
+
+                rentingVehicleSelection.Command();
+                
             }
             else if (IsNotACancelOption(userInput))
             {

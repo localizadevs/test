@@ -1,29 +1,31 @@
-﻿using System;
-using StockManagerSystem.Stock_Elements;
+﻿using StockManagerSystem.Stock_Elements;
 using StockManagerSystem.Vehicle;
+using System;
+using System.Data.SqlTypes;
 
 namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 {
-    class RentingPriceConfirmation : AbstactSelectionCommand
+    internal class RentingPriceConfirmation : AbstactSelectionCommand
     {
-        private RentingVehicleSelection rentingVehicleSelection;
-        private StockController stockController;
-        private readonly string agencyToRent;
-        private readonly string vehicleToRent;
+        private readonly StockController stockController;
+        private string agencyToRent;
+        private string vehicleToRent;
 
-        public RentingPriceConfirmation(RentingVehicleSelection rentingVehicleSelectionCommand, StockController stock,
-            string agencySelected, string vehicleSelected)
+        public bool PriceRefused { get; set; }
+
+
+        public RentingPriceConfirmation(StockController stock, string agency, string vehicleSelected)
         {
-            rentingVehicleSelection = rentingVehicleSelectionCommand;
             stockController = stock;
-            agencyToRent = agencySelected;
+            agencyToRent = agency;
             vehicleToRent = vehicleSelected;
+            PriceRefused = false;
         }
 
         public override string DisplayCommand()
         {
-            VehicleModel vehicleVisualition = stockController.GetStock().GetAgency(agencyToRent).GetVehicle(vehicleToRent);
-            (double costs, double discount) rentCosts = vehicleVisualition.GetCostsAndDiscountToRent();
+            VehicleModel vehicleVisualization = stockController.GetStock().GetAgency(agencyToRent).GetVehicle(vehicleToRent);
+            (double costs, double discount) rentCosts = vehicleVisualization.GetCostsAndDiscountToRent();
             return ViewDisplayBuilder.FinalRentMenuDisplay(vehicleToRent, rentCosts);
         }
 
@@ -47,12 +49,12 @@ namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
                         Console.WriteLine();
                         Console.WriteLine("Sorry. You almost rent it. This vehicle is no longer available. ");
                         Console.ReadLine();
-                        rentingVehicleSelection.Command();
+                        PriceRefused = true;
                     }
                     break;
                 case "N":
                 case "n":
-                    rentingVehicleSelection.Command();
+                    PriceRefused = true;
                     break;
                 default:
                     repeatSelection = InvalidSelection(lastMessage);

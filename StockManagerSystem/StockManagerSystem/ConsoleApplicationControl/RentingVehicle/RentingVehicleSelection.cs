@@ -1,18 +1,21 @@
-﻿using StockManagerSystem.Stock_Elements;
+﻿using System.Runtime.Serialization.Formatters;
+using StockManagerSystem.Stock_Elements;
 
 namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 {
     public class RentingVehicleSelection : AbstactSelectionCommand
     {
-        private RentingInitialCommand rentingInitial;
-        private StockController stockController;
+        private readonly RentingInitialCommand rentingInitial;
+        private readonly StockController stockController;
         private readonly string agencyToRent;
+        public bool ChangeAgency { get; set; } = false;
 
         public RentingVehicleSelection(RentingInitialCommand rentingInitialCommand, StockController stock, string agencySelected)
         {
             rentingInitial = rentingInitialCommand;
             stockController = stock;
             agencyToRent = agencySelected;
+        
         }
 
         public override string DisplayCommand()
@@ -28,8 +31,13 @@ namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 
             if (inputIsValidVehicle)
             {
-                RentingPriceConfirmation priceCommand = new RentingPriceConfirmation(this, stockController, agencyToRent, userInput);
-                priceCommand.Command();                
+                RentingPriceConfirmation priceCommand = new RentingPriceConfirmation(stockController, agencyToRent, userInput);
+                priceCommand.Command();
+                if (priceCommand.PriceRefused)
+                {
+                    repeatSelection = true;
+                    this.DisplayCommand();
+                }
             }
             else if (userInput.Equals(CancelOption, System.StringComparison.OrdinalIgnoreCase))
             {
@@ -42,5 +50,7 @@ namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 
             return repeatSelection;
         }
+
+        
     }
 }
