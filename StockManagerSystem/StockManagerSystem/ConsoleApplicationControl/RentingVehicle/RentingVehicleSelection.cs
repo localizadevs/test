@@ -1,18 +1,17 @@
-﻿using System.Runtime.Serialization.Formatters;
+﻿using System.Data.SqlTypes;
+using System.Runtime.Serialization.Formatters;
 using StockManagerSystem.Stock_Elements;
 
 namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 {
     public class RentingVehicleSelection : AbstactSelectionCommand
     {
-        private readonly RentingInitialCommand rentingInitial;
         private readonly StockController stockController;
         private readonly string agencyToRent;
         public bool ChangeAgency { get; set; } = false;
 
-        public RentingVehicleSelection(RentingInitialCommand rentingInitialCommand, StockController stock, string agencySelected)
+        public RentingVehicleSelection( StockController stock, string agencySelected)
         {
-            rentingInitial = rentingInitialCommand;
             stockController = stock;
             agencyToRent = agencySelected;
         
@@ -41,7 +40,7 @@ namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
             }
             else if (userInput.Equals(CancelOption, System.StringComparison.OrdinalIgnoreCase))
             {
-                rentingInitial.Command();
+                ChangeAgency = true;
             }
             else
             {

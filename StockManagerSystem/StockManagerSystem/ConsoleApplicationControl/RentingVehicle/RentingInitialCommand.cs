@@ -26,9 +26,15 @@ namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 
             if (inputIsValidAgency)
             {
-                RentingVehicleSelection rentingVehicleSelection = new RentingVehicleSelection(this, stockController, userInput);
+                RentingVehicleSelection rentingVehicleSelection = new RentingVehicleSelection(stockController, userInput);
 
                 rentingVehicleSelection.Command();
+
+                if (rentingVehicleSelection.ChangeAgency)
+                {
+                    this.DisplayCommand();
+                    repeatSelection = true;
+                }
                 
             }
             else if (IsNotACancelOption(userInput))
