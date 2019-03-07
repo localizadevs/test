@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.Vehicle
 {
     public class VehicleModel : IRentableVehicleComponent
     {
         public string Name { get; set; }
-        public int Capacity { get;  set; }
-        public int Available { get;  set; }
-        public Double DefaultPrice { get;  set; }
+        public int Capacity { get; set; }
+        public int Available { get; set; }
+        public Double DefaultPrice { get; set; }
 
         public VehicleModel()
         {
@@ -16,33 +16,33 @@ namespace StockManagerSystem
 
         public VehicleModel(string name)
         {
-            this.Name = name;
+            Name = name;
         }
 
         public double GetDiscountRate()
         {
 
-            if (this.Available == 1)
+            if (Available == 1)
                 return 0.0;
 
-            return 10 * this.Available / this.Capacity;
+            return 10 * Available / Capacity;
         }
 
         public (double costs, double discount) GetCostsAndDiscountToRent()
         {
-            return (this.GetFinalPrice(), this.GetDiscountRate());
+            return (GetFinalPrice(), GetDiscountRate());
         }
 
         public double GetFinalPrice()
         {
-            return this.DefaultPrice * (1 - (this.GetDiscountRate() / 100));
+            return DefaultPrice * (1 - (GetDiscountRate() / 100));
         }
 
         public bool TryPerformRent()
         {
-            if (this.CanBeRented())
+            if (CanBeRented())
             {
-                this.Available--;
+                Available--;
                 return true;
             }
             return false;
@@ -50,14 +50,14 @@ namespace StockManagerSystem
 
         public bool CanBeRented()
         {
-            return this.Available > 0;
+            return Available > 0;
         }
 
         public bool TryReturn()
         {
-            if (this.CanBeReturned())
+            if (CanBeReturned())
             {
-                this.Available++;
+                Available++;
                 return true;
             }
             return false;
@@ -65,7 +65,7 @@ namespace StockManagerSystem
 
         public bool CanBeReturned()
         {
-            return this.Available + 1 <= this.Capacity;
+            return Available + 1 <= Capacity;
         }
 
     }

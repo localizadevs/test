@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using StockManagerSystem.Vehicle;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.Stock_Elements
 {
     public class StockController
     {
@@ -16,14 +17,14 @@ namespace StockManagerSystem
 
         private void LoadData(string fileName)
         {
-            CSVStockParser csvStockParser = new CSVStockParser(stockRepository);
+            CsvStockParser csvStockParser = new CsvStockParser(stockRepository);
 
             csvStockParser.ReadFile(fileName);
         }
 
         public bool RentVehicle(string agencyName, string modelName)
         {
-            Agency agency = stockRepository.GetAgency(agencyName);
+            Agency.Agency agency = stockRepository.GetAgency(agencyName);
             bool isRented = agency.TryRentVehicle(modelName);
             if (isRented)
             {
@@ -34,7 +35,7 @@ namespace StockManagerSystem
 
         public bool ReturnVehicle(string agencyName, string modelName)
         {
-            Agency agency = stockRepository.GetAgency(agencyName);
+            Agency.Agency agency = stockRepository.GetAgency(agencyName);
             bool hasReturn = agency.TryReturnVehicle(modelName);
             if (hasReturn)
             {
@@ -43,7 +44,7 @@ namespace StockManagerSystem
             return hasReturn;
         }
 
-        public List<Agency> GetAgencies()
+        public List<Agency.Agency> GetAgencies()
         {
             return stockRepository.Agencies;
         }

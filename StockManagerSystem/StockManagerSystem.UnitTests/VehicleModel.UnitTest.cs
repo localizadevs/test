@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using StockManagerSystem.Vehicle;
 
 namespace StockManagerSystem.UnitTests
 {

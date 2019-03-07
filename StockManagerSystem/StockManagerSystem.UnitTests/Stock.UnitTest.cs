@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using StockManagerSystem.Stock_Elements;
 
 namespace StockManagerSystem.UnitTests
 {
@@ -70,10 +71,10 @@ namespace StockManagerSystem.UnitTests
         public void StockComposite_GetAgency_Exists()
         {
             StockComposite stock = new StockComposite();
-            Agency expectedAgency = new Agency("bh");
+            Agency.Agency expectedAgency = new Agency.Agency("bh");
             stock.TryInsertAgency("bh");
 
-            Agency bhAgency = stock.GetAgency("bh");
+            Agency.Agency bhAgency = stock.GetAgency("bh");
 
             Assert.AreEqual(expectedAgency.Name, bhAgency.Name);
 

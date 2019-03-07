@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.ConsoleApplicationControl
 {
     /// <summary>
     /// Mechanism to registry the choice of the user and creates a chain of responsability.

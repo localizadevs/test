@@ -1,10 +1,10 @@
-﻿using StockManagerSystem.ConsoleApplicationControl.RentingVehicle;
+﻿using StockManagerSystem.Stock_Elements;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 {
     public class RentingInitialCommand : AbstactSelectionCommand
     {
-        private StockController stockController;        
+        private readonly StockController stockController;        
 
         public RentingInitialCommand( StockController stock)
         {
@@ -14,7 +14,10 @@ namespace StockManagerSystem
 
         public override string DisplayCommand()
         {
-            return ViewDisplayBuilder.RentMenuAgenciesSelection(stockController.GetAgencies());
+            const string finalMessage = "Which agency (c to Cancel)? ";
+            const string title = "Rent Menu -> Agencies";
+            return ViewDisplayBuilder.AgencyMenuSelection(title, finalMessage, stockController.GetAgencies());
+
         }
 
         public override bool Selection(string userInput, string lastMessage)

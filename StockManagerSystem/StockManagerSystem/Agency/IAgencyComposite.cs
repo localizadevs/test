@@ -1,4 +1,6 @@
-﻿namespace StockManagerSystem
+﻿using StockManagerSystem.Vehicle;
+
+namespace StockManagerSystem.Agency
 {
     /// <summary>
     /// Represents an renting vehicle model Agency and provides operation on its fleet.

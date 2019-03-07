@@ -1,12 +1,13 @@
 using NUnit.Framework;
 using System;
+using StockManagerSystem.Stock_Elements;
 
 namespace StockManagerSystem.UnitTests
 {
     [TestFixture]
-    public class CSVParserTest
+    public class CsvParserTest
     {
-        private const string DEFAULT_HEADER = "agencia;carro;capacidade;quantidade;tarifapadrao";
+        private const string DefaultHeader = "agencia;carro;capacidade;quantidade;tarifapadrao";
         private string[] fileContentData;
         [OneTimeSetUp]
         public void LoadFileContent()
@@ -22,11 +23,11 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void CSVParser_ReadHeader_CheckReader()
         {
-            CSVStockParser csvParser = new CSVStockParser(null);
-            string[] expectedHeader = DEFAULT_HEADER.Split(";");
-            csvParser.LoadAttributesPositions(DEFAULT_HEADER);
+            CsvStockParser csvParser = new CsvStockParser(null);
+            string[] expectedHeader = DefaultHeader.Split(";");
+            csvParser.LoadAttributesPositions(DefaultHeader);
 
-            int capacidadePosition = csvParser.GetExpectedAttributePosition(ExpectedAttributes.capacidade);
+            int capacidadePosition = csvParser.GetExpectedAttributePosition(ExpectedAttributes.Capacidade);
 
             Assert.AreEqual(2, capacidadePosition);
 
@@ -35,11 +36,11 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void CSVParser_ReadHeader_OmitInvalidHeaders()
         {
-            CSVStockParser csvParser = new CSVStockParser(null);
+            CsvStockParser csvParser = new CsvStockParser(null);
             string fakeHeader = "agencia;dummy;carro;capacidade;quantidade;tarifapadrao";
             csvParser.LoadAttributesPositions(fakeHeader);
 
-            int capacidadePosition = csvParser.GetExpectedAttributePosition(ExpectedAttributes.capacidade);
+            int capacidadePosition = csvParser.GetExpectedAttributePosition(ExpectedAttributes.Capacidade);
 
             Assert.AreEqual(3, capacidadePosition);
         }
@@ -47,7 +48,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void CSVParser_ReadHeader_MissingHeaders()
         {
-            CSVStockParser csvParser = new CSVStockParser(null);
+            CsvStockParser csvParser = new CsvStockParser(null);
             string fakeHeader = "agencia;capacidade;quantidade;tarifapadrao";
 
             Exception ex = Assert.Throws<Exception>(() => csvParser.LoadAttributesPositions(fakeHeader));
@@ -59,10 +60,10 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void CSVParser_ReadHeader_CheckQuantityRead()
         {
-            CSVStockParser csvParser = new CSVStockParser(null);
-            string[] expectedHeader = (DEFAULT_HEADER + ";").Split(";");
+            CsvStockParser csvParser = new CsvStockParser(null);
+            string[] expectedHeader = (DefaultHeader + ";").Split(";");
 
-            csvParser.LoadAttributesPositions(DEFAULT_HEADER);
+            csvParser.LoadAttributesPositions(DefaultHeader);
 
             Assert.AreEqual(5, csvParser.ExpectedAttributesPosition.Count);
 
@@ -72,8 +73,8 @@ namespace StockManagerSystem.UnitTests
         public void CSVParser_ReadContent_CheckAgencies()
         {
             StockComposite stockRepository = new StockComposite();
-            CSVStockParser csvParser = new CSVStockParser(stockRepository);
-            csvParser.LoadAttributesPositions(DEFAULT_HEADER);
+            CsvStockParser csvParser = new CsvStockParser(stockRepository);
+            csvParser.LoadAttributesPositions(DefaultHeader);
 
             foreach (string line in fileContentData)
                 csvParser.LoadAttributeDataByPosition(line);
@@ -86,7 +87,7 @@ namespace StockManagerSystem.UnitTests
         public void CSVParser_ReadContent_WithoutHeader()
         {
             StockComposite stockRepository = new StockComposite();
-            CSVStockParser csvParser = new CSVStockParser(stockRepository);
+            CsvStockParser csvParser = new CsvStockParser(stockRepository);
 
             foreach (string line in fileContentData)
                 csvParser.LoadAttributeDataByPosition(line);

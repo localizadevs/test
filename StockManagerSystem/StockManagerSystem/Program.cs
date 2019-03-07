@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
+using StockManagerSystem.ConsoleApplicationControl;
+using StockManagerSystem.Stock_Elements;
 
 namespace StockManagerSystem
 {

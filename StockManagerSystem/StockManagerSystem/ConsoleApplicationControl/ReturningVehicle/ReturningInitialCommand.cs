@@ -1,4 +1,6 @@
-﻿namespace StockManagerSystem
+﻿using StockManagerSystem.Stock_Elements;
+
+namespace StockManagerSystem.ConsoleApplicationControl.ReturningVehicle
 {
     public class ReturningInitialCommand : AbstactSelectionCommand
     {

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.Stock_Elements
 {
     public class StockComposite : IStockComposite
     {
-        public List<Agency> Agencies { get; private set; } = new List<Agency>();
+        public List<Agency.Agency> Agencies { get; private set; } = new List<Agency.Agency>();
 
         public int CountAgencies()
         {
             return Agencies.Count;
         }
 
-        public Agency TryInsertAgency(string name)
+        public Agency.Agency TryInsertAgency(string name)
         {
 
             int index = GetAgencyIndex(name);
@@ -21,7 +21,7 @@ namespace StockManagerSystem
                 return Agencies[index];
             }
 
-            Agency agencyToInsert = new Agency(name);
+            Agency.Agency agencyToInsert = new Agency.Agency(name);
             Agencies.Add(agencyToInsert);
             return agencyToInsert;
         }
@@ -42,7 +42,7 @@ namespace StockManagerSystem
             return GetAgencyIndex(name) >= 0;
         }
 
-        public Agency GetAgency(string name)
+        public Agency.Agency GetAgency(string name)
         {
             int index = GetAgencyIndex(name);
             if (index == -1)

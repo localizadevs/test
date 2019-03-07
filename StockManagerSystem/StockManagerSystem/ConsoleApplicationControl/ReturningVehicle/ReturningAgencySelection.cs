@@ -1,19 +1,25 @@
 ﻿using System;
+using StockManagerSystem.Stock_Elements;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.ConsoleApplicationControl.ReturningVehicle
 {
     public class ReturningAgencySelection : AbstactSelectionCommand
     {
         private StockController stockController;
         private readonly string vehicleToReturn;
+        
         public ReturningAgencySelection(StockController stock, string vehicle)
         {
             stockController = stock;
             vehicleToReturn = vehicle;
+            
         }
         public override string DisplayCommand()
         {
-            return ViewDisplayBuilder.ReturnAgencyMenu(vehicleToReturn, stockController.GetAgencies());
+            string title = $"Which agency to return {vehicleToReturn} (c to Cancel)? ";
+            string finalMessage = $"Which agency to return {vehicleToReturn} (c to Cancel)? ";
+
+            return ViewDisplayBuilder.AgencyMenuSelection(title, finalMessage, stockController.GetAgencies());
         }
 
         public override bool Selection(string userInput, string lastMessage)

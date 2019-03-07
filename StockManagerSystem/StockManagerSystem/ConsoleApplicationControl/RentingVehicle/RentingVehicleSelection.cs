@@ -1,4 +1,6 @@
-﻿namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
+﻿using StockManagerSystem.Stock_Elements;
+
+namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 {
     public class RentingVehicleSelection : AbstactSelectionCommand
     {

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace CommonParsers
+namespace StockManagerSystem
 {
     /// <summary>
     /// Aims a design logic to CSV PARSERS.
     /// </summary>
-    public abstract class AbstractCSVParser
+    public abstract class AbstractCsvParser
     {
         public Dictionary<int, int> ExpectedAttributesPosition { get; set; } = new Dictionary<int, int>();
         /// <summary>

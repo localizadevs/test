@@ -1,4 +1,6 @@
 ﻿using System;
+using StockManagerSystem.Stock_Elements;
+using StockManagerSystem.Vehicle;
 
 namespace StockManagerSystem.ConsoleApplicationControl.RentingVehicle
 {

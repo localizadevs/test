@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using StockManagerSystem.Vehicle;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.Agency
 {
     /// <summary>
     /// Renting vehicle model Agency
@@ -11,7 +11,7 @@ namespace StockManagerSystem
     {
 
         public string Name { get; set; }
-        public List<VehicleModel> Fleet { get; private set; } = new List<VehicleModel>();
+        public List<VehicleModel> Fleet { get; } = new List<VehicleModel>();
 
         public Agency(string name)
         {

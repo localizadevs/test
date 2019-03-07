@@ -1,4 +1,9 @@
-﻿namespace StockManagerSystem
+﻿using StockManagerSystem.ConsoleApplicationControl.RentingVehicle;
+using StockManagerSystem.ConsoleApplicationControl.ReturningVehicle;
+using StockManagerSystem.ConsoleApplicationControl.StockStatus;
+using StockManagerSystem.Stock_Elements;
+
+namespace StockManagerSystem.ConsoleApplicationControl
 {
     public class InitialSelection : AbstactSelectionCommand
 
@@ -10,7 +15,7 @@
             ReturnVehicle = "3",
             Exit = "4";
 
-        private StockStatusCommand currentStockStatusCommand;
+        private readonly StockStatusCommand currentStockStatusCommand;
         private RentingInitialCommand rentingInitialCommand;
         private ReturningInitialCommand returningInitialCommand;
         public InitialSelection(StockController stockController)

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.Vehicle
 {
     /// <summary>
     /// Vehicle model attributes to an rental agency.

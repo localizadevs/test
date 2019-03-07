@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using StockManagerSystem.Vehicle;
 
 namespace StockManagerSystem.UnitTests
 {
@@ -9,7 +10,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_LoadFleet_CheckCount()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
             bhAngecy.TryAddVehicle("chevrolet fusca");
 
             int sizeOfFleet = bhAngecy.Fleet.Count;
@@ -21,7 +22,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_GetVehicle_Exists()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
             bhAngecy.TryAddVehicle("chevrolet fusca");
 
             VehicleModel fusca = bhAngecy.GetVehicle("chevrolet fusca");
@@ -33,7 +34,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_GetVehicle_NotExists()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
 
             Exception error = Assert.Throws<Exception>(() => bhAngecy.GetVehicle("chevrolet fusca"));
 
@@ -43,7 +44,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_ContainsVehicle_OK()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
             bhAngecy.TryAddVehicle("chevrolet fusca");
 
             bool containsElement = bhAngecy.ContainsVehicle("chevrolet fusca");
@@ -54,7 +55,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_ContainsVehicle_Absence()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
             bhAngecy.TryAddVehicle("chevrolet fusca");
 
             bool containsElement = bhAngecy.ContainsVehicle("ds fusca");
@@ -65,7 +66,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_RentVehicle_RentWorks()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
             VehicleModel vehicleModel = bhAngecy.TryAddVehicle("chevrolet fusca");
             vehicleModel.Capacity = 10;
             vehicleModel.Available = 10;
@@ -78,7 +79,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_RentVehicle_VehicleAbsent()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
 
             Exception error = Assert.Throws<Exception>(() => bhAngecy.TryRentVehicle("chevrolet fusca"));
 
@@ -88,7 +89,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_RentVehicle_ReturnWorks()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
             VehicleModel vehicleModel = bhAngecy.TryAddVehicle("chevrolet fusca");
             vehicleModel.Capacity = 10;
             vehicleModel.Available = 9;
@@ -101,7 +102,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_ReturnVehicle_VehicleAbsent()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
 
             Exception error = Assert.Throws<Exception>(() => bhAngecy.TryReturnVehicle("chevrolet fusca"));
 
@@ -111,7 +112,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_CanReturn_ListOfRentableVehicles()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
             VehicleModel vehicleModel = bhAngecy.TryAddVehicle("chevrolet fusca");
             vehicleModel.Capacity = 10;
             vehicleModel.Available = 9;
@@ -129,7 +130,7 @@ namespace StockManagerSystem.UnitTests
         [Test]
         public void Agency_CanRent_ListOfReturnableVehicles()
         {
-            Agency bhAngecy = new Agency("bh");
+            Agency.Agency bhAngecy = new Agency.Agency("bh");
             VehicleModel vehicleModel = bhAngecy.TryAddVehicle("chevrolet fusca");
             vehicleModel.Capacity = 10;
             vehicleModel.Available = 9;

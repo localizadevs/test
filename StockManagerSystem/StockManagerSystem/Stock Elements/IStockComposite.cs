@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StockManagerSystem
+﻿namespace StockManagerSystem.Stock_Elements
 {
     /// <summary>
     /// A repository to hold agencies status of stock data.
@@ -16,13 +12,13 @@ namespace StockManagerSystem
         /// </summary>
         /// <param name="name">Name to be searched</param>
         /// <returns>Agency instance.</returns>
-        Agency GetAgency(string name);
+        Agency.Agency GetAgency(string name);
         /// <summary>
         /// Inserts an agency only if it does not already exists.
         /// </summary>
         /// <param name="name">Name of Agency to be created.</param>
         /// <returns>Agency instance.</returns>
-        Agency TryInsertAgency(string name);
+        Agency.Agency TryInsertAgency(string name);
 
                
     }

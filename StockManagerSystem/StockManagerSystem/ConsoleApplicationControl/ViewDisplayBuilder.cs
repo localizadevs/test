@@ -1,9 +1,10 @@
-﻿using ConsoleTableExt;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using ConsoleTableExt;
+using StockManagerSystem.Vehicle;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.ConsoleApplicationControl
 {
     /// <summary>
     /// Builder to produce the user interface in the console.
@@ -73,7 +74,7 @@ namespace StockManagerSystem
         /// </summary>
         /// <param name="agencies">Collection of agencies to be displayed</param>
         /// <returns>Last message used in the console.</returns>
-        public static string DisplayCurrentStock(List<Agency> agencies)
+        public static string DisplayCurrentStock(List<Agency.Agency> agencies)
         {
             string finalMessage = "Return to last menu (y): ";
 
@@ -92,7 +93,7 @@ namespace StockManagerSystem
         /// </summary>
         /// <param name="agencies">Collection of agencies to build data table</param>
         /// <returns>DataTable with the content of current stock.</returns>
-        private static DataTable GetContentCurrentStockByAgencies(List<Agency> agencies)
+        private static DataTable GetContentCurrentStockByAgencies(List<Agency.Agency> agencies)
         {
             DataTable currentStockContent = new DataTable();
 
@@ -101,7 +102,7 @@ namespace StockManagerSystem
             currentStockContent.Columns.Add("Capacity", typeof(int));
             currentStockContent.Columns.Add("Available", typeof(int));
             currentStockContent.Columns.Add("Default Price", typeof(double));
-            foreach (Agency agency in agencies)
+            foreach (Agency.Agency agency in agencies)
             {
                 foreach (VehicleModel vehicle in agency.Fleet)
                 {
@@ -117,36 +118,37 @@ namespace StockManagerSystem
 
             return currentStockContent;
         }
-        /// <summary>
-        /// Screen to display all agencies available to rent.
-        /// </summary>
-        /// <param name="agencies">Collection of agencies.</param>
-        /// <returns>Last message used in the console.</returns>
-        public static string RentMenuAgenciesSelection(List<Agency> agencies)
-        {
-            string finalMessage = "Which agency (c to Cancel)? ";
-            Console.Clear();
-            BuildTitleMenu("Rent Menu -> Agencies");
+    
 
+        /// <summary>
+        /// Display a menu to select agency with the proper title
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="finalMessage"></param>
+        /// <param name="agencies"></param>
+        /// <returns></returns>
+        public static string AgencyMenuSelection(string title, String finalMessage, List<Agency.Agency> agencies)
+        {
+            Console.Clear();
+            BuildTitleMenu(title);
             ConsoleTableBuilder
                .From(GetAgencyNames(agencies))
                .ExportAndWriteLine();
             Console.WriteLine(new string('*', 10));
             Console.Write(finalMessage);
             return finalMessage;
-
         }
         /// <summary>
         /// Gets the names of agencies.
         /// </summary>
         /// <param name="agencies">Collection of Agency</param>
         /// <returns>Datatable with agencies name reduced</returns>
-        private static DataTable GetAgencyNames(List<Agency> agencies)
+        private static DataTable GetAgencyNames(List<Agency.Agency> agencies)
         {
             DataTable agencyNames = new DataTable();
 
             agencyNames.Columns.Add("Agency", typeof(string));
-            foreach (Agency agency in agencies)
+            foreach (Agency.Agency agency in agencies)
             {
                 DataRow rowInstance = agencyNames.NewRow();
                 rowInstance["Agency"] = agency.Name;
@@ -282,25 +284,7 @@ namespace StockManagerSystem
 
             return fleetToReturn;
         }
-        /// <summary>
-        /// Displays a menu to select agency to return vehicle.
-        /// </summary>
-        /// <param name="vehicleName">Model to return.</param>
-        /// <param name="agencies">Collection of agencies to select</param>
-        /// <returns>Last message used.</returns>
-        public static string ReturnAgencyMenu(string vehicleName, List<Agency> agencies)
-        {
-            string finalMessage = $"Which agency to return {vehicleName} (c to Cancel)? ";
-            Console.Clear();
-            BuildTitleMenu("Returning Vehicle Menu -> Agency Selection");
-
-            ConsoleTableBuilder
-               .From(GetAgencyNames(agencies))
-               .ExportAndWriteLine();
-            Console.WriteLine(new string('*', 10));
-            Console.Write(finalMessage);
-            return finalMessage;
-        }
+        
         /// <summary>
         /// Displays a congratulations message when returns is sucessful.
         /// </summary>

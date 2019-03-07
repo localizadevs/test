@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StockManagerSystem
+namespace StockManagerSystem.Vehicle
 {
     public class RentedVehicles
     {
@@ -43,7 +43,7 @@ namespace StockManagerSystem
 
         public List<string> GetListRentedNames()
         {
-            return new List<string>(this.ModelNames.Keys);
+            return new List<string>(ModelNames.Keys);
         }
     }
 }
