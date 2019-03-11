@@ -71,20 +71,18 @@ namespace StockManagerSystem.Stock_Elements
         public override void LoadAttributeDataByPosition(string contentLine)
         {
             string[] values = contentLine.Split(";");
-            if (values.Length >= attributesQuantity)
-            {
-                Agency.Agency agency = stock.TryInsertAgency(values[GetExpectedAttributePosition(ExpectedAttributes.Agencia)]);
-                VehicleModel vehicleModel = agency.TryAddVehicle(values[GetExpectedAttributePosition(ExpectedAttributes.Carro)]);
-                vehicleModel.Capacity = int.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.Capacidade)]);
-                vehicleModel.Available = int.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.Quantidade)]);
-                vehicleModel.DefaultPrice = Double.Parse(values[GetExpectedAttributePosition(ExpectedAttributes.Tarifapadrao)]);
-            }
-        }
 
-        public int GetExpectedAttributePosition(ExpectedAttributes attribute)
-        {
-            return ExpectedAttributesPosition[(int)attribute];
+            if (values.Length < attributesQuantity) return;
+
+            string agencyName = values[ExpectedAttributesPosition[(int) ExpectedAttributes.Agencia]];
+            Agency.Agency agency = stock.TryInsertAgency(agencyName);
+            string vehicleName = values[ExpectedAttributesPosition[(int)ExpectedAttributes.Carro]];
+            VehicleModel vehicleModel = agency.TryAddVehicle(vehicleName);
+            vehicleModel.Capacity = int.Parse(values[ExpectedAttributesPosition[(int) ExpectedAttributes.Capacidade]]);
+            vehicleModel.Available = int.Parse(values[ExpectedAttributesPosition[(int) ExpectedAttributes.Quantidade]]);
+            vehicleModel.DefaultPrice = Double.Parse(values[ExpectedAttributesPosition[(int) ExpectedAttributes.Tarifapadrao]]);
         }
+        
 
         public StockComposite GetStock()
         {

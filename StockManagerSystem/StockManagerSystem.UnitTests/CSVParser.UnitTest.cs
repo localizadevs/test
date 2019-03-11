@@ -27,7 +27,7 @@ namespace StockManagerSystem.UnitTests
             string[] expectedHeader = DefaultHeader.Split(";");
             csvParser.LoadAttributesPositions(DefaultHeader);
 
-            int capacidadePosition = csvParser.GetExpectedAttributePosition(ExpectedAttributes.Capacidade);
+            int capacidadePosition = csvParser.ExpectedAttributesPosition[(int) ExpectedAttributes.Capacidade];
 
             Assert.AreEqual(2, capacidadePosition);
 
@@ -40,7 +40,7 @@ namespace StockManagerSystem.UnitTests
             string fakeHeader = "agencia;dummy;carro;capacidade;quantidade;tarifapadrao";
             csvParser.LoadAttributesPositions(fakeHeader);
 
-            int capacidadePosition = csvParser.GetExpectedAttributePosition(ExpectedAttributes.Capacidade);
+            int capacidadePosition = csvParser.ExpectedAttributesPosition[(int) ExpectedAttributes.Capacidade];
 
             Assert.AreEqual(3, capacidadePosition);
         }
