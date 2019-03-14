@@ -46,9 +46,32 @@ namespace StockManagerSystem.UnitTests
         }
 
         [Test]
+        public void CSVSimpleParser_ReadHeader_OmitInvalidHeaders()
+        {
+            CsvSimpleStockParser csvParser = new CsvSimpleStockParser(null);
+            string fakeHeader = "agencia;dummy;carro;capacidade;quantidade;tarifapadrao";
+
+            Exception error = Assert.Throws<Exception>(() => csvParser.LoadAttributesPositions(fakeHeader));
+
+            Assert.That(error.Message, Is.EqualTo("CSV Parser found a problem: Missing attributes. Please Check the input file."));
+        }
+
+        [Test]
         public void CSVParser_ReadHeader_MissingHeaders()
         {
             CsvStockParser csvParser = new CsvStockParser(null);
+            string fakeHeader = "agencia;capacidade;quantidade;tarifapadrao";
+
+            Exception ex = Assert.Throws<Exception>(() => csvParser.LoadAttributesPositions(fakeHeader));
+
+            Assert.That(ex.Message, Is.EqualTo("CSV Parser found a problem: Missing attributes. Please Check the input file."));
+
+        }
+
+        [Test]
+        public void CSVSimpleParser_ReadHeader_MissingHeaders()
+        {
+            CsvSimpleStockParser csvParser = new CsvSimpleStockParser(null);
             string fakeHeader = "agencia;capacidade;quantidade;tarifapadrao";
 
             Exception ex = Assert.Throws<Exception>(() => csvParser.LoadAttributesPositions(fakeHeader));
@@ -96,7 +119,18 @@ namespace StockManagerSystem.UnitTests
 
         }
 
+        [Test]
+        public void CSVSimpleParser_ReadContent_WithoutHeader()
+        {
+            StockComposite stockRepository = new StockComposite();
+            CsvSimpleStockParser csvParser = new CsvSimpleStockParser(stockRepository);
 
+            foreach (string line in fileContentData)
+                csvParser.LoadAttributeDataByPosition(line);
+
+            Assert.AreEqual(2, stockRepository.CountAgencies());
+
+        }
 
     }
 }

@@ -1,19 +1,17 @@
-﻿using System;
-using StockManagerSystem.Vehicle;
+﻿using StockManagerSystem.Vehicle;
+using System;
+using System.Collections.Generic;
 
 namespace StockManagerSystem.Stock_Elements
 {
-    public enum ExpectedAttributes
-    {
-        Agencia = 0,
-        Carro,
-        Capacidade,
-        Quantidade,
-        Tarifapadrao
-    }
+
+
 
     public class CsvStockParser : AbstractCsvParser
     {
+        public Dictionary<int, int> ExpectedAttributesPosition { get; set; } = new Dictionary<int, int>();
+
+
         private StockComposite stock;
         private readonly int attributesQuantity;
 
@@ -25,7 +23,7 @@ namespace StockManagerSystem.Stock_Elements
             LoadInitialAttributesPositions();
         }
 
-        protected sealed override void LoadInitialAttributesPositions()
+        protected void LoadInitialAttributesPositions()
         {
             foreach (ExpectedAttributes attribute in Enum.GetValues(typeof(ExpectedAttributes)))
             {
@@ -42,9 +40,9 @@ namespace StockManagerSystem.Stock_Elements
         {
             int position = 0;
             int totalAttributesParsed = 0;
-            foreach (string attribute in headerLine.Split(";"))
+            foreach (string attribute in headerLine.Split(DELIMITER))
             {
-                if (TryConvertToExpectedAttributesEnum(attribute, out ExpectedAttributes attributeEnum))
+                if (CsvStockCommon.TryConvertToExpectedAttributesEnum(attribute, out ExpectedAttributes attributeEnum))
                 {
                     ExpectedAttributesPosition[(int)attributeEnum] = position;
                     totalAttributesParsed++;
@@ -58,10 +56,7 @@ namespace StockManagerSystem.Stock_Elements
             }
         }
 
-        private bool TryConvertToExpectedAttributesEnum(string attribute, out ExpectedAttributes attributeEnum)
-        {
-            return Enum.TryParse(attribute, true, out attributeEnum);
-        }
+
 
         private bool MissingAttributes(int totalAttributesParsed)
         {
@@ -70,23 +65,27 @@ namespace StockManagerSystem.Stock_Elements
 
         public override void LoadAttributeDataByPosition(string contentLine)
         {
-            string[] values = contentLine.Split(";");
+            string[] values = contentLine.Split(DELIMITER);
 
             if (values.Length < attributesQuantity) return;
 
-            string agencyName = values[ExpectedAttributesPosition[(int) ExpectedAttributes.Agencia]];
+            string agencyName = values[ExpectedAttributesPosition[(int)ExpectedAttributes.Agencia]];
             Agency.Agency agency = stock.TryInsertAgency(agencyName);
             string vehicleName = values[ExpectedAttributesPosition[(int)ExpectedAttributes.Carro]];
             VehicleModel vehicleModel = agency.TryAddVehicle(vehicleName);
-            vehicleModel.Capacity = int.Parse(values[ExpectedAttributesPosition[(int) ExpectedAttributes.Capacidade]]);
-            vehicleModel.Available = int.Parse(values[ExpectedAttributesPosition[(int) ExpectedAttributes.Quantidade]]);
-            vehicleModel.DefaultPrice = Double.Parse(values[ExpectedAttributesPosition[(int) ExpectedAttributes.Tarifapadrao]]);
+            vehicleModel.Capacity = int.Parse(values[ExpectedAttributesPosition[(int)ExpectedAttributes.Capacidade]]);
+            vehicleModel.Available = int.Parse(values[ExpectedAttributesPosition[(int)ExpectedAttributes.Quantidade]]);
+            vehicleModel.DefaultPrice = Double.Parse(values[ExpectedAttributesPosition[(int)ExpectedAttributes.Tarifapadrao]]);
         }
-        
+
 
         public StockComposite GetStock()
         {
             return stock;
         }
     }
+
+
+
+    
 }

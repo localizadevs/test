@@ -17,7 +17,7 @@ namespace StockManagerSystem.Stock_Elements
 
         private void LoadData(string fileName)
         {
-            CsvStockParser csvStockParser = new CsvStockParser(stockRepository);
+            CsvSimpleStockParser csvStockParser = new CsvSimpleStockParser(stockRepository);
 
             csvStockParser.ReadFile(fileName);
         }

@@ -47,3 +47,14 @@ Para executar a aplicação, deve-se  executar o dotnet restore e dotnet build, 
 
 
 ![Screenshot](sample.PNG)
+
+
+### Code Design
+
+ Para a solução foi desenvolvido um Parser de CSV capaz de ler independente da posição do atributo no arquivo.
+
+* O Parser carrega os dados lidos para uma arvoré de Stock > Agency > VehicleModel.
+
+* Para manipular as ação do cliente foi criado um Controlador que mantem um historico dos carros alugados. 
+
+* A manipulação das ações do usuario são realizadas e carregadas através de um padrão de design Command.

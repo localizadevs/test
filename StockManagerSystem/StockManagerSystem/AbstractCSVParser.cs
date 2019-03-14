@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 
 namespace StockManagerSystem
 {
@@ -8,11 +7,7 @@ namespace StockManagerSystem
     /// </summary>
     public abstract class AbstractCsvParser
     {
-        public Dictionary<int, int> ExpectedAttributesPosition { get; set; } = new Dictionary<int, int>();
-        /// <summary>
-        /// Guarantee a default position to each attribute in ExpectedAttributesPosition.
-        /// </summary>
-        protected abstract void LoadInitialAttributesPositions();
+        protected const string DELIMITER = ";";
         /// <summary>
         /// Gather the position information from the header line.
         /// </summary>
