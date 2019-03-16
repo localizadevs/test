@@ -16,9 +16,9 @@ namespace StockManagerSystem.Stock_Elements
         public Agency.Agency TryInsertAgency(string name)
         {
 
-            int index = GetAgencyIndex(name);
-            if (index >= 0)
+            if (IsLastAgency(name))
             {
+								int index = Agencies.Count - 1;
                 return Agencies[index];
             }
 
@@ -27,6 +27,16 @@ namespace StockManagerSystem.Stock_Elements
             return agencyToInsert;
         }
 
+        private bool IsLastAgency(string name)
+        {
+	        int index = Agencies.Count - 1;
+	        if (index >= 0)
+	        {
+		        return (Agencies[index].Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+	        }
+
+	        return false;
+        }
 
         public int GetAgencyIndex(string name)
         {
