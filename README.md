@@ -51,7 +51,7 @@ Para executar a aplicação, deve-se  executar o dotnet restore e dotnet build, 
 
 ### Code Design
 
- Para a solução foi desenvolvido um Parser de CSV capaz de ler independente da posição do atributo no arquivo.
+ Para a solução foi desenvolvido um Parser de CSV capaz de ler independente da posição do atributo no arquivo. Uma versão simples está disponivel.
 
 * O Parser carrega os dados lidos para uma arvoré de Stock > Agency > VehicleModel.
 
