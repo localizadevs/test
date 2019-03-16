@@ -30,7 +30,7 @@ namespace StockManagerSystem.Stock_Elements
 
         public int GetAgencyIndex(string name)
         {
-            for (int i = 0; i < Agencies.Count; i++)
+            for (int i = Agencies.Count -1; i >= 0; i--)
             {
                 if (Agencies[i].Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return i;
