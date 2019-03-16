@@ -19,6 +19,14 @@ namespace StockManagerSystem.Vehicle
             Name = name;
         }
 
+        public VehicleModel(string name, int capacity, int available, double defaultPrice) 
+        {
+            Name = name;
+            Capacity = capacity;
+            Available = available;
+            DefaultPrice = defaultPrice;
+        }
+
         public double GetDiscountRate()
         {
 

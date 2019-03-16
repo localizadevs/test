@@ -33,7 +33,13 @@ namespace StockManagerSystem.Agency
 
             return modelToAdd;
         }
-              
+
+        public void AddVehicle(VehicleModel modelToAdd)
+        {
+
+            Fleet.Add(modelToAdd);
+        }
+
         public int GetVehicleIndex(string name)
         {
             for (int i = 0; i < Fleet.Count; i++)

@@ -78,11 +78,7 @@ namespace StockManagerSystem.Stock_Elements
             vehicleModel.DefaultPrice = Double.Parse(values[ExpectedAttributesPosition[(int)ExpectedAttributes.Tarifapadrao]]);
         }
 
-
-        public StockComposite GetStock()
-        {
-            return stock;
-        }
+        
     }
 
 

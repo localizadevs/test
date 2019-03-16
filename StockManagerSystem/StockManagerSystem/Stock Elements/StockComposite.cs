@@ -53,20 +53,6 @@ namespace StockManagerSystem.Stock_Elements
 
             return Agencies[index];
         }
-
-        public Agency.Agency this[string name] 
-        {
-                get
-                {
-                    int index = GetAgencyIndex(name);
-                    if (index == -1)
-                    {
-                        throw new Exception("Agency Not Found");
-                    }
-
-                    return Agencies[index];
-            }
-        }
  
     }
 }

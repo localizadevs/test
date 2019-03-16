@@ -45,11 +45,14 @@ namespace StockManagerSystem.Stock_Elements
 
             string agencyName = values[(int)ExpectedAttributes.Agencia];
             Agency.Agency agency = stock.TryInsertAgency(agencyName);
+
             string vehicleName = values[(int)ExpectedAttributes.Carro];
-            VehicleModel vehicleModel = agency.TryAddVehicle(vehicleName);
-            vehicleModel.Capacity = int.Parse(values[(int)ExpectedAttributes.Capacidade]);
-            vehicleModel.Available = int.Parse(values[(int)ExpectedAttributes.Quantidade]);
-            vehicleModel.DefaultPrice = Double.Parse(values[(int)ExpectedAttributes.Tarifapadrao]);
+            int capacity = int.Parse(values[(int)ExpectedAttributes.Capacidade]);
+            int available = int.Parse(values[(int)ExpectedAttributes.Quantidade]);
+            Double defaultPrice = Double.Parse(values[(int)ExpectedAttributes.Tarifapadrao]);
+            VehicleModel vehicleNew = new VehicleModel(vehicleName, capacity, available, defaultPrice);
+            agency.AddVehicle(vehicleNew);
+
         }
 
 
